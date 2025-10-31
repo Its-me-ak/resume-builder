@@ -1,13 +1,16 @@
 import { useState } from "react";
-import Badge from "../common/Badge";
 import Title from "../common/Title";
+import { Zap } from "lucide-react";
 
 const Features = () => {
   const [isHover, setIsHover] = useState(false);
 
   return (
     <div className="flex flex-col items-center my-8 scroll-mt-10" id="features">
-      <Badge />
+      <div className="flex items-center gap-2 text-sm text-green-800 bg-green-400/10 border border-green-200 rounded-full px-4 py-1">
+        <Zap width={16} />
+        <span>Simple Process</span>
+      </div>
       <Title
         title={"Build Your Resume"}
         description={
