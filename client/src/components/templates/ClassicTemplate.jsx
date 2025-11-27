@@ -142,7 +142,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
             {data.skills && data.skills.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
-                        CORE SKILLS
+                        SKILLS
                     </h2>
 
                     <div className="flex gap-4 flex-wrap">
