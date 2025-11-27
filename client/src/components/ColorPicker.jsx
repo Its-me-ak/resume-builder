@@ -2,22 +2,20 @@ import { Check, Palette } from 'lucide-react'
 import React, { useState } from 'react'
 
 const ColorPicker = ({selectedColor, onChange}) => {
-    const colors = [
-        { name: "Blue", value: "#3B82F6" },
-        { name: "Red", value: "#EF4444" },
-        { name: "Green", value: "#10B981" },
-        { name: "Purple", value: "#8B5CF6" },
-        { name: "Orange", value: "#F59E0B" },
-        { name: "Teal", value: "#14B8A6" },
-        { name: "Pink", value: "#EC4899" },
-        {name: "Gray", value: "#6B7280" },
-        {name: "Black", value: "#1F2937" },
-        {name: "Indigo", value: "#4F46E5" },
-        {name: "Cyan", value: "#22D3EE" },
-        {name: "Lime", value: "#84CC16" },
-        {name: "Yellow", value: "#FBBF24" },
-        {name: "Rose", value: "#F43F5E" },
-    ]
+const colors = [
+  { name: "Navy", value: "#1E3A8A" },
+  { name: "Royal", value: "#2563EB" },
+{ name: "Rose", value: "#E11D48" },
+  { name: "Slate", value: "#475569" },
+  { name: "Emerald", value: "#047857" },
+  { name: "Teal", value: "#0F766E" },
+  { name: "Burgundy", value: "#7F1D1D" },
+  { name: "Plum", value: "#6B21A8" },
+  { name: "Steel", value: "#0369A1" },
+  { name: "Coffee", value: "#78350F" },
+  { name: "Indigo", value: "#4338CA" },
+  { name: "Midnight", value: "#111827" },
+];
     const [isOpen, setIsOpen] = useState(false)
   return (
     <div className='relative'>
