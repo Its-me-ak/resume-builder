@@ -13,13 +13,11 @@ const EducationForm = ({ data, onChange }) => {
     onChange([...data, newEducation]);
   };
 
-  // Delete experience
   const handleDeleteEducation = (index) => {
     const deletedEducation = data.filter((_, i) => i !== index);
     onChange(deletedEducation);
   };
 
-  // Update experience
   const handleEducationChange = (index, field, value) => {
     const updatedEducation = [...data];
     updatedEducation[index] = { ...updatedEducation[index], [field]: value };
