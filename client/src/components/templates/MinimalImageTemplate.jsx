@@ -45,7 +45,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
                     {/* Contact */}
                     <section className="mb-8">
-                        <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                        <h2 className="font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
                             CONTACT
                         </h2>
                         <div className="space-y-2 text-sm">
@@ -73,7 +73,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Education */}
                     {data.education && data.education.length > 0 && (
                         <section className="mb-8">
-                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                            <h2 className="font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
                                 EDUCATION
                             </h2>
                             <div className="space-y-4 text-sm">
@@ -93,7 +93,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Skills */}
                     {data.skills && data.skills.length > 0 && (
                         <section>
-                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                            <h2 className="font-semibold tracking-widest" style={{ color: accentColor }} >
                                 SKILLS
                             </h2>
                             <ul className="space-y-1 text-sm">
@@ -111,7 +111,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Summary */}
                     {data.professional_summary && (
                         <section className="mb-8">
-                            <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
+                            <h2 className="font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
                                 SUMMARY
                             </h2>
                             <p className="text-zinc-700 leading-relaxed">
@@ -123,7 +123,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Experience */}
                     {data.experience && data.experience.length > 0 && (
                         <section>
-                            <h2 className="text-sm font-semibold tracking-widest mb-4" style={{ color: accentColor }} >
+                            <h2 className="font-semibold tracking-widest mb-4" style={{ color: accentColor }} >
                                 EXPERIENCE
                             </h2>
                             <div className="space-y-6 mb-8">
@@ -157,7 +157,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     {/* Projects */}
                     {data.project && data.project.length > 0 && (
                         <section>
-                            <h2 className="text-sm uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
+                            <h2 className="uppercase tracking-widest font-semibold" style={{ color: accentColor }}>
                                 PROJECTS
                             </h2>
                             <div className="space-y-4">

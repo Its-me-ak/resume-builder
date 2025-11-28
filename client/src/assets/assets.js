@@ -34,7 +34,7 @@ export const dummyResumeData = [
       {
         company: "Example Technologies.",
         position: "Senior Full Stack Developer",
-        start_date: "2023-06",
+        start_date: "2023-06-01",
         end_date: "Present",
         description:
           "Architected, developed, and deployed innovative full-stack applications at Example Technologies.\ncreating robust back-end systems and intuitive front- end interfaces to deliver meaningful digital experiences ",
@@ -44,8 +44,8 @@ export const dummyResumeData = [
       {
         company: "Example Technologies.",
         position: "Full Stack Developer",
-        start_date: "2019-08",
-        end_date: "2023-05",
+        start_date: "2019-08-01",
+        end_date: "2023-05-01",
         description:
           "Engineered and deployed scalable full-stack web applications for Example Technologies, translating complex requirements into robust front-end interfaces and efficient back-end services.",
         is_current: false,
@@ -57,7 +57,7 @@ export const dummyResumeData = [
         institution: "Example Institute of Technology",
         degree: "B.TECH",
         field: "CSE",
-        graduation_date: "2023-05",
+        graduation_date: "2023-05-01",
         gpa: "8.7",
         _id: "68d2a31a1c4dd38875bb0380",
       },
@@ -65,7 +65,7 @@ export const dummyResumeData = [
         institution: "Example Public School",
         degree: "HIGHER SECONDARY",
         field: "PCM",
-        graduation_date: "2019-03",
+        graduation_date: "2019-03-01",
         gpa: "",
         _id: "68d2a31a1c4dd38875bb0381",
       },
@@ -73,7 +73,7 @@ export const dummyResumeData = [
         institution: "Example Academy",
         degree: "SECONDARY SCHOOL",
         field: "",
-        graduation_date: "2017-03",
+        graduation_date: "2017-03-01",
         gpa: "",
         _id: "68d2a31a1c4dd38875bb0382",
       },
@@ -133,7 +133,7 @@ export const dummyResumeData = [
       {
         company: "TechSpark Inc.",
         position: "Lead Frontend Engineer",
-        start_date: "2022-02",
+        start_date: "2022-02-01",
         end_date: "Present",
         description:
           "Leading a team of frontend developers to build accessible and scalable user interfaces. Collaborated with UX teams to implement design systems and improve frontend performance.",
@@ -143,8 +143,8 @@ export const dummyResumeData = [
       {
         company: "PixelForge Labs",
         position: "Frontend Developer",
-        start_date: "2018-09",
-        end_date: "2022-01",
+        start_date: "2018-09-01",
+        end_date: "2022-01-01",
         description:
           "Developed reusable UI components using React and Vue.js. Worked closely with backend teams to integrate REST APIs and optimize SPA performance.",
         is_current: false,
@@ -156,7 +156,7 @@ export const dummyResumeData = [
         institution: "University of Digital Arts",
         degree: "B.Sc.",
         field: "Computer Science",
-        graduation_date: "2018-06",
+        graduation_date: "2018-06-01",
         gpa: "3.8",
         _id: "78e3b42c2d5ff49286cc1492",
       },
@@ -164,7 +164,7 @@ export const dummyResumeData = [
         institution: "Lincoln High School",
         degree: "High School Diploma",
         field: "Science",
-        graduation_date: "2014-05",
+        graduation_date: "2014-05-01",
         gpa: "",
         _id: "78e3b42c2d5ff49286cc1493",
       },
@@ -224,7 +224,7 @@ export const dummyResumeData = [
       {
         company: "DataNest Solutions",
         position: "Senior Backend Engineer",
-        start_date: "2021-03",
+        start_date: "2021-03-01",
         end_date: "Present",
         description:
           "Developed distributed microservices using Node.js and Docker. Implemented API rate limiting, authentication, and background job processing using Redis and Bull.",
@@ -234,8 +234,8 @@ export const dummyResumeData = [
       {
         company: "CloudCore Systems",
         position: "Backend Developer",
-        start_date: "2016-07",
-        end_date: "2021-02",
+        start_date: "2016-07-01",
+        end_date: "2021-02-01",
         description:
           "Maintained and scaled backend systems built on Python and PostgreSQL. Automated deployments with GitLab CI/CD and improved API response time by 35%.",
         is_current: false,
@@ -247,7 +247,7 @@ export const dummyResumeData = [
         institution: "Texas Institute of Technology",
         degree: "B.E.",
         field: "Information Technology",
-        graduation_date: "2016-05",
+        graduation_date: "2016-05-01",
         gpa: "3.9",
         _id: "89f4c53d3e6gg59397dd259j",
       },
@@ -255,7 +255,7 @@ export const dummyResumeData = [
         institution: "Central High School",
         degree: "High School Diploma",
         field: "Science",
-        graduation_date: "2012-04",
+        graduation_date: "2012-04-01",
         gpa: "",
         _id: "89f4c53d3e6gg59397dd259k",
       },
