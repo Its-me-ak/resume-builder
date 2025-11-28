@@ -23,7 +23,6 @@ const EducationForm = ({ data, onChange }) => {
   const handleEducationChange = (index, field, value) => {
     const updatedEducation = [...data];
     updatedEducation[index] = { ...updatedEducation[index], [field]: value };
-    console.log(updatedEducation);
     onChange(updatedEducation);
   };
 
@@ -77,7 +76,7 @@ const EducationForm = ({ data, onChange }) => {
                   className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full"
                   placeholder=" Institution Name"
                   value={education.institution || ""}
-                  onChange={(e) => (index, "institution", e.target.value)}
+                  onChange={(e) => handleEducationChange(index, "institution", e.target.value)}
                 />
                 <input
                   type="text"
@@ -118,7 +117,7 @@ const EducationForm = ({ data, onChange }) => {
                 placeholder="GPA (optional)"
                 value={education.gpa || ""}
                 onChange={(e) =>
-                  handleEducationChange(index, "field", e.target.value)
+                  handleEducationChange(index, "gpa", e.target.value)
                 }
               />
             </div>
