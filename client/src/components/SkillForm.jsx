@@ -1,4 +1,4 @@
-import { Plus, Sparkle, Sparkles, X } from "lucide-react";
+import { Info, Plus, Sparkles, X } from "lucide-react";
 import React, { useState } from "react";
 
 const SkillForm = ({ data, onChange }) => {
@@ -49,14 +49,14 @@ const SkillForm = ({ data, onChange }) => {
           onClick={handleAddSkill}
           disabled={!newSkill.trim()}
         >
-            <Plus className="size-4"/>
+          <Plus className="size-4" />
           Add
         </button>
       </div>
 
       {data.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-            <Sparkles className="w-10 h-10 mx-auto mb-2"/>
+          <Sparkles className="w-10 h-10 mx-auto mb-2" />
           <p>No skills added yet.</p>
           <p className="text-sm">
             Click "Add" to include your relevant skills and qualifications.
@@ -74,12 +74,22 @@ const SkillForm = ({ data, onChange }) => {
                 className="ml-1 hover:bg-blue-200 rounded-full p-1 transition-colors"
                 onClick={() => handleDeleteSkill(index)}
               >
-                <X className="w-3 h-3"/>
+                <X className="w-3 h-3" />
               </button>
             </div>
           ))}
         </div>
       )}
+
+      {/* Add tip */}
+      <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-2 py-1 mt-2">
+        <Info className="size-4 text-blue-500" />
+        <p className="text-sm text-gray-500 italic max-w-[85%] mx-auto text-center mt-1 leading-relaxed">
+          <strong className="mr-2">Tip:</strong>
+          Add 8-12 relevant skills. Include both technical and soft skills to
+          showcase your qualifications.
+        </p>
+      </div>
     </div>
   );
 };

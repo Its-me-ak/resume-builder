@@ -31,7 +31,7 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
         />
         <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-2 py-1 mt-2">
           <Info className="size-4 text-blue-500" />
-          <p className="text-[13px] text-gray-500 italic max-w-[85%] mx-auto text-center mt-1 leading-relaxed">
+          <p className="text-sm text-gray-500 italic max-w-[85%] mx-auto text-center mt-1 leading-relaxed">
             Tip: Keep it concise and focused on your most relevant skills and
             experiences.
           </p>
