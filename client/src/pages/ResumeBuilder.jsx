@@ -6,12 +6,17 @@ import {
   Briefcase,
   ChevronLeft,
   ChevronRight,
+  Download,
+  EyeIcon,
+  EyeOffIcon,
   FileText,
   FolderIcon,
   GraduationCap,
+  Share2Icon,
   Sparkles,
   User,
 } from "lucide-react";
+import Swal from "sweetalert2";
 import PersonalInfoForm from "../components/PersonalInfoForm";
 import ResumePreview from "../components/ResumePreview";
 import TemplateSelector from "../components/TemplateSelector";
@@ -24,7 +29,6 @@ import SkillForm from "../components/SkillForm";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
-
   const [resumeData, setResumeData] = useState({
     id: "",
     title: "",
@@ -60,6 +64,30 @@ const ResumeBuilder = () => {
   ];
 
   const activeSection = sections[activeSectionIndex];
+
+  const changeResumeVisibility = async () => {
+    setResumeData({ ...resumeData, public: !resumeData.public });
+  };
+
+  // Share Resume
+  const shareResume = () => {
+    const frontEndUrl = window.location.href.split("/app")[0];
+    const resumeUrl = `${frontEndUrl}/view/${resumeId}`;
+
+    if (navigator.share) {
+      navigator.share({
+        url: resumeUrl,
+        text: "Here is my resume",
+        title: "Check out my resume",
+      });
+    } else {
+      Swal.fire(" Share not supported on this browser", "", "info");
+    }
+  };
+
+  const handleDownloadResume = () => {
+    window.print();
+  };
 
   useEffect(() => {
     loadExistingResume();
@@ -199,17 +227,58 @@ const ResumeBuilder = () => {
                 {activeSection.id === "skills" && (
                   <SkillForm
                     data={resumeData.skills}
-                    onChange={(data) => setResumeData((prev) => ({ ...prev, skills: data }))}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({ ...prev, skills: data }))
+                    }
                   />
                 )}
               </div>
+
+              <button className="bg-linear-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm">
+                Save Changes
+              </button>
             </div>
           </div>
 
           {/* Right panel - Preview */}
           <div className="lg:col-span-7 max-lg:mt-6">
-            <div>{/* Button */}</div>
+            <div className="relative w-full">
+              <div className="absolute bottom-3 left-0 right-0 flex items-center justify-end gap-2">
+                {resumeData.public && (
+                  <button
+                    className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-green-100 to-blue-200 text-blue-600 ring-blue-300 rounded-lg hover:ring transition-colors"
+                    onClick={shareResume}
+                  >
+                    <Share2Icon className="size-4" />
+                    Share
+                  </button>
+                )}
 
+                <button
+                  className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-purple-100 to-purple-200 text-purple-600 ring-purple-300 rounded-lg hover:ring transition-colors"
+                  onClick={changeResumeVisibility}
+                >
+                  {resumeData.public ? (
+                    <EyeIcon className="size-4" />
+                  ) : (
+                    <EyeOffIcon className="size-4" />
+                  )}
+                  {resumeData.public ? "Public" : "Private"}
+                </button>
+
+                <button
+                  onClick={handleDownloadResume}
+                  className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-green-100 to-green-200 text-green-600 ring-green-300 rounded-lg hover:ring transition-colors"
+                >
+                  <Download className="size-4" />
+                  Download
+                </button>
+              </div>
+            </div>
+
+            {/* 
+            Resume Preview
+          */}
             <ResumePreview
               data={resumeData}
               template={resumeData.template}
