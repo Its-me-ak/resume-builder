@@ -1,0 +1,52 @@
+import mongoose, { Schema } from "mongoose";
+
+const resumeSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    title: { type: String, default: "Untitled Resume" },
+    public: { type: Boolean, default: false },
+    template: { type: String, default: "classic" },
+    accent_color: { type: String, default: "#1E3A8A" },
+    professional_summary: { type: String, default: "" },
+    skills: [{ type: String }],
+    personal_info: {
+      image: { type: String, default: "" },
+      full_name: { type: String, default: "" },
+      profession: { type: String, default: "" },
+      email: { type: String, default: "" },
+      phone: { type: String, default: "" },
+      location: { type: String, default: "" },
+      linkedin: { type: String, default: "" },
+      website: { type: String, default: "" },
+    },
+    experience: [
+      {
+        company: { type: String, default: "" },
+        position: { type: String, default: "" },
+        start_date: { type: String, default: "" },
+        end_date: { type: String, default: "" },
+        description: { type: String, default: "" },
+        is_current: { type: Boolean, default: false },
+      },
+    ],
+    project: [
+      {
+        name: { type: String },
+        type: { type: String },
+        description: { type: String },
+      },
+    ],
+    education: [
+      {
+        institution: { type: String },
+        degree: { type: String },
+        field: { type: String },
+        graduation_date: { type: String },
+        gpa: { type: String },
+      },
+    ],
+  },
+  { timestamps: true, minimize: false }
+);
+
+export const Resume = mongoose.model("Resume", resumeSchema);

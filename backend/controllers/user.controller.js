@@ -1,3 +1,4 @@
+import { Resume } from "../models/Resume.js";
 import { User } from "../models/User.js";
 import { generateTokenAndSetCookie } from "../utils/generateToken.js";
 
@@ -25,14 +26,15 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const newUser = await User.create({ name, email, password });
+    const newUser = await User.create({ name, email, password }).select(
+      "-password"
+    );
 
     if (!newUser) {
       return res.status(500).json({ message: "User registration failed" });
     }
 
     generateTokenAndSetCookie(newUser._id, res);
-    newUser.password = undefined;
     return res
       .status(201)
       .json({ message: "User registered successfully", user: newUser });
@@ -52,7 +54,7 @@ export const loginUser = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("-password");
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -76,7 +78,7 @@ export const loginUser = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const userId = req.userId;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -87,4 +89,22 @@ export const getUserById = async (req, res) => {
       .status(500)
       .json({ message: "Internal server error", error: error.message });
   }
-}
+};
+
+// controller for getting user Resume
+// GET: /api/user/resumes
+export const getUserResume = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const resume = await Resume.find({ userId });
+
+    return res
+      .status(200)
+      .json({ message: "Resume fetched successfully", resume });
+  } catch (error) {
+    console.log("Error in getUserResume:", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
