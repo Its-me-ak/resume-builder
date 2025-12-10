@@ -1,4 +1,6 @@
 import { Resume } from "../models/Resume.js";
+import imagekit from "../utils/imagekit.js";
+import fs from "fs";
 
 // controller for creating a new resume
 // POST: /api/resumes/create
@@ -23,11 +25,11 @@ export const createResume = async (req, res) => {
 };
 
 // controller for deleting a resume
-// DELETE: /api/resumes/:id
+// DELETE: /api/resumes/delete/:id
 export const deleteResume = async (req, res) => {
   try {
     const userId = req.userId;
-    const {resumeId} = req.params;
+    const { resumeId } = req.params;
     const resume = await Resume.findOneAndDelete({ _id: resumeId, userId });
     if (!resume) {
       return res.status(404).json({ message: "Resume not found" });
@@ -41,14 +43,15 @@ export const deleteResume = async (req, res) => {
   }
 };
 
-
 // get user resume by id
-// GET: /api/resumes/:resumeId
+// GET: /api/resumes/get/:resumeId
 export const getResumeById = async (req, res) => {
   try {
     const userId = req.userId;
-    const {resumeId } = req.params;
-    const resume = await Resume.findOne({ _id: resumeId, userId }).select("-__v -createdAt -updatedAt");
+    const { resumeId } = req.params;
+    const resume = await Resume.findOne({ _id: resumeId, userId }).select(
+      "-__v -createdAt -updatedAt"
+    );
     if (!resume) {
       return res.status(404).json({ message: "Resume not found" });
     }
@@ -66,8 +69,10 @@ export const getResumeById = async (req, res) => {
 // GET: /api/resumes/public/:resumeId
 export const getPublicResumeById = async (req, res) => {
   try {
-    const {resumeId} = req.params;
-    const resume = await Resume.findOne({public: true, _id: resumeId}).select("-__v -createdAt -updatedAt");
+    const { resumeId } = req.params;
+    const resume = await Resume.findOne({ public: true, _id: resumeId }).select(
+      "-__v -createdAt -updatedAt"
+    );
     if (!resume) {
       return res.status(404).json({ message: "Resume not found" });
     }
@@ -81,20 +86,39 @@ export const getPublicResumeById = async (req, res) => {
   }
 };
 
-
 // controller for updating a resume
-// PUT: /api/resumes/:resumeId
+// PUT: /api/resumes/update
 export const updateResume = async (req, res) => {
   try {
     const userId = req.userId;
-    const {resumeId, resumeData, removeBackground} = req.body
+    const { resumeId, resumeData, removeBackground } = req.body;
     const image = req.file;
 
     let resumeDataCopy = JSON.parse(resumeData);
 
-    const resume = await Resume.findByIdAndUpdate({userId, _id: resumeId}, resumeDataCopy, {new: true})
+    if (image) {
+      const imageBufferData = fs.createReadStream(image.path);
+      const response = await imagekit.files.upload({
+        file: imageBufferData,
+        fileName: "resume.png",
+        folder: "user-resumes",
+        transformation: {
+          pre: 'w-300,h-300,fo-face,z-0.75' + (removeBackground ? ",e-bgremove" : ""),
+        }
+      });
 
-    return res.status(200).json({ message: "Resume updated successfully", resume })
+      resumeDataCopy.personal_info.image = response.url;
+    }
+
+    const resume = await Resume.findByIdAndUpdate(
+      { userId, _id: resumeId },
+      resumeDataCopy,
+      { new: true }
+    );
+
+    return res
+      .status(200)
+      .json({ message: "Resume updated successfully", resume });
   } catch (error) {
     console.log("Error in updateResume:", error);
     return res
@@ -102,18 +126,6 @@ export const updateResume = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 // JSON.stringify() — When to Use It
 // It converts a JavaScript object into a JSON string.
