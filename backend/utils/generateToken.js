@@ -11,5 +11,5 @@ export const generateTokenAndSetCookie = (userId, res) => {
     sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   };
-  res.status(201).cookie("JWT", token, options);
+  res.cookie("JWT", token, options);
 };

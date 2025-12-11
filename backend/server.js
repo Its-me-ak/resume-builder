@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import "dotenv/config";
+import cookieParser from 'cookie-parser';
 import { connectDatabase } from './db/connectDb.js';
 import userRouter from './routes/user.route.js';
 import resumeRouter from './routes/resume.route.js';
@@ -14,6 +15,7 @@ await connectDatabase();
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.send('Server is running');        

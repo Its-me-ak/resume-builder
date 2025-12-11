@@ -12,12 +12,14 @@ export const registerUser = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return apiError(res, 400, "Password must be at least 6 characters");
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters long" });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return apiError(res, 400, "Invalid email format");
+      return res.status(400).json({ message: "Invalid email format" });
     }
 
     // check if user already exists
@@ -26,18 +28,18 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const newUser = await User.create({ name, email, password }).select(
-      "-password"
-    );
+    const newUser = await User.create({ name, email, password });
 
     if (!newUser) {
       return res.status(500).json({ message: "User registration failed" });
     }
 
     generateTokenAndSetCookie(newUser._id, res);
-    return res
-      .status(201)
-      .json({ message: "User registered successfully", user: newUser });
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      user: newUser,
+    });
   } catch (error) {
     console.log("Error in registerUser:", error);
     return res
@@ -54,7 +56,7 @@ export const loginUser = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ email })
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -77,8 +79,8 @@ export const loginUser = async (req, res) => {
 // controller for getting user by ID
 export const getUserById = async (req, res) => {
   try {
-    const userId = req.userId;
-    const user = await User.findById(userId).select("-password");
+    const userId = req.user._id;
+    const user = await User.findById(userId)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -95,7 +97,7 @@ export const getUserById = async (req, res) => {
 // GET: /api/user/resumes
 export const getUserResume = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const resume = await Resume.find({ userId });
 
     return res
