@@ -76,6 +76,23 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// controller for logout user
+export const logoutUser = async (req, res) => {
+ try {
+   res.clearCookie("JWT", {
+     httpOnly: true,
+     secure: process.env.NODE_ENV !== "development",
+     sameSite: "strict",
+     path: "/",
+   });
+
+   return res.status(200).json({ message: "Logout successfully" });
+ } catch (error) {
+   console.log(error);
+   return res.status(500).json({ message: "Internal server error" });
+ }
+};
+
 // controller for getting user by ID
 export const getUserById = async (req, res) => {
   try {

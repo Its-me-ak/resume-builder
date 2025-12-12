@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
 import api from "../config/api";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const query = new URLSearchParams(window.location.search);
   const urlState = query.get("state");
   const [state, setState] = useState(urlState || "login");
@@ -22,8 +24,10 @@ const Login = () => {
     try {
       const { data } = await api.post(`/api/users/${state}`, formData);
       dispatch(login(data));
-      localStorage.setItem("token", data.token);
+      console.log(data);
+      
       toast.success(data.message);
+      navigate("/app");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || error.message);

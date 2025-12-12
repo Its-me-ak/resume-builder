@@ -9,33 +9,22 @@ import { useDispatch } from "react-redux";
 import api from "./config/api";
 import { login, setLoading } from "./app/features/authSlice";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Login from "./pages/Login";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const getUserData = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      dispatch(setLoading(false));
-      return;
-    }
-
     dispatch(setLoading(true));
+
     try {
-      if (token) {
-        const data = await api.get("/api/users/data", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (data.user) {
-          dispatch(
-            login({
-              user: data.user,
-              token,
-            })
-          );
-        }
+      const { data } = await api.get("/api/users/data", {
+        withCredentials: true,
+      });
+
+      if (data.user) {
+        dispatch(login({ user: data.user }));
       }
     } catch (error) {
       console.log(error.message);
@@ -50,13 +39,22 @@ const App = () => {
 
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="app" element={<Layout />}>
+        <Route path="/auth" element={<Login />} />
+        <Route
+          path="app"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />
         </Route>
+
         <Route path="/view/:resumeId" element={<Preview />} />
       </Routes>
     </>
