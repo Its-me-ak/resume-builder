@@ -85,12 +85,12 @@ const Dashboard = () => {
       e.preventDefault();
       const { data } = await api.put(
         `/api/resumes/update`,
-        {resumeId: editResumeId, resumeData: JSON.stringify({title})},
+        { resumeId: editResumeId, resumeData: JSON.stringify({ title }) },
         { withCredentials: true }
-      )
+      );
       setAllResumes(
         allResumes.map((resume) =>
-          resume._id === editResumeId ? { ...resume, title }: resume
+          resume._id === editResumeId ? { ...resume, title } : resume
         )
       );
       setTitle("");
