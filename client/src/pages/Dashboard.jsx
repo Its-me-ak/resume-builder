@@ -1,6 +1,7 @@
 import {
   FilePenLineIcon,
   FileTextIcon,
+  LoaderCircleIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
@@ -185,7 +186,7 @@ const Dashboard = () => {
                   style={{ color: baseColor }}
                 />
                 <p
-                  className="text-sm text-center px-2 group-hover:scale-105 transition-all"
+                  className="text-sm text-center px-2 group-hover:scale-105 transition-all max-w-36 wrap-break-word whitespace-normal"
                   style={{ color: baseColor }}
                 >
                   {resume.title}
@@ -297,7 +298,13 @@ const Dashboard = () => {
                   onChange={(e) => setResume(e.target.files[0])}
                 />
               </div>
-              <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+              <button
+                className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center justify-center gap-2.5 transition-colors"
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <LoaderCircleIcon className="size-4 animate-spin text-white " />
+                )}
                 {isLoading ? "Uploading..." : "Upload Resume"}
               </button>
               <XIcon
