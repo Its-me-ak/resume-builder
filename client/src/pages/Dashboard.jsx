@@ -12,9 +12,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import api from "../config/api";
+import toast from "react-hot-toast";
+import pdfToText from "react-pdftotext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
   const [allResumes, setAllResumes] = useState([]);
   const [showCreateResume, setShowCreateResume] = useState(false);
@@ -22,21 +27,51 @@ const Dashboard = () => {
   const [title, setTitle] = useState("");
   const [resume, setResume] = useState(null);
   const [editResumeId, setEditResumeId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const loadAllResumes = async () => {
     setAllResumes(dummyResumeData);
   };
 
   const createResume = async (e) => {
-    e.preventDefault();
-    setShowCreateResume(false);
-    navigate(`/app/builder/resume123`);
+    try {
+      e.preventDefault();
+      const { data } = await api.post(
+        "/api/resumes/create",
+        { title },
+        { withCredentials: true }
+      );
+      console.log("resume data:", data);
+      setAllResumes([...allResumes, data.resume]);
+      setTitle("");
+      setShowCreateResume(false);
+      navigate(`/app/builder/${data.resume._id}`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const uploadResume = async (e) => {
     e.preventDefault();
-    setShowUploadResume(false);
-    navigate(`/app/builder/resume123`);
+    setIsLoading(true);
+    try {
+      const resumeText = await pdfToText(resume);
+      const { data } = await api.post(
+        "/api/ai/upload-resume",
+        { title, resumeText },
+        { withCredentials: true }
+      );
+      setTitle("");
+      setResume(null);
+      setShowUploadResume(false);
+      navigate(`/app/builder/${data.resumeId}`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const editTitle = async (e) => {
@@ -44,21 +79,23 @@ const Dashboard = () => {
   };
 
   // Delete resume
-const deleteResume = (resumeId) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won’t be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const newResumes = allResumes.filter((resume) => resume._id !== resumeId);
-      setAllResumes(newResumes);
-      Swal.fire("Deleted!", "Resume deleted.", "success");
-    }
-  });
-};
+  const deleteResume = (resumeId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won’t be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newResumes = allResumes.filter(
+          (resume) => resume._id !== resumeId
+        );
+        setAllResumes(newResumes);
+        Swal.fire("Deleted!", "Resume deleted.", "success");
+      }
+    });
+  };
 
   useEffect(() => {
     loadAllResumes();
@@ -97,8 +134,6 @@ const deleteResume = (resumeId) => {
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
           {allResumes.map((resume, idx) => {
             const baseColor = colors[idx % colors.length];
-            console.log(baseColor);
-
             return (
               <button
                 key={idx}
@@ -125,16 +160,19 @@ const deleteResume = (resumeId) => {
                 >
                   Update on: {new Date(resume.updatedAt).toLocaleDateString()}
                 </p>
-                <div className="hidden absolute top-1 right-1 group-hover:flex items-center"
+                <div
+                  className="hidden absolute top-1 right-1 group-hover:flex items-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <TrashIcon className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 hover:text-red-600 transition-colors"
+                  <TrashIcon
+                    className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 hover:text-red-600 transition-colors"
                     onClick={() => deleteResume(resume._id)}
                   />
-                  <PencilIcon className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 hover:text-green-600 transition-colors"
+                  <PencilIcon
+                    className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 hover:text-green-600 transition-colors"
                     onClick={() => {
                       setEditResumeId(resume._id);
-                      setTitle(resume.title)
+                      setTitle(resume.title);
                     }}
                   />
                 </div>
@@ -215,6 +253,13 @@ const deleteResume = (resumeId) => {
                     )}
                   </div>
                 </label>
+                <input
+                  id="resume-input"
+                  type="file"
+                  accept=".pdf"
+                  className="hidden"
+                  onChange={(e) => setResume(e.target.files[0])}
+                />
               </div>
               <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
                 Upload Resume

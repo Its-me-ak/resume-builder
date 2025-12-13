@@ -189,6 +189,7 @@ export const uploadResume = async (req, res) => {
     });
   } catch (error) {
     console.log("Error in uploadResume:", error);
+    logger.error(error.stack);
     return res
       .status(500)
       .json({ message: "Internal server error", error: error.message });

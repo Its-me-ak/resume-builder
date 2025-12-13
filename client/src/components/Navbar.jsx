@@ -26,7 +26,10 @@ const Navbar = () => {
     <div className="shadow bg-white">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 py-3.5 text-slate-800 transition-all">
         <Link to={"/"}>
-          <img src="/logo.svg" alt="" className="h-11 w-auto" />
+          <h1 className="text-3xl font-bold text-gray-900 flex items-end">
+            Resumify
+            <span className="relative inline-block w-3 h-3 bg-green-500 rounded-full ml-0.5 -translate-y-0.5"></span>
+          </h1>
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <p className="max-sm:hidden">Hi, {user?.name}</p>
