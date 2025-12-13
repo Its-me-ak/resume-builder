@@ -30,7 +30,17 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData);
+    try {
+       const { data } = await api.get(
+         "/api/users/resumes",
+         { withCredentials: true }
+       );
+       console.log(data);
+       setAllResumes(data?.resumes);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const createResume = async (e) => {
@@ -262,7 +272,7 @@ const Dashboard = () => {
                 />
               </div>
               <button className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                Upload Resume
+                {isLoading ? "Uploading..." : "Upload Resume"}
               </button>
               <XIcon
                 className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"

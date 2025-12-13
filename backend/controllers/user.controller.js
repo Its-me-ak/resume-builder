@@ -114,12 +114,12 @@ export const getUserById = async (req, res) => {
 // GET: /api/user/resumes
 export const getUserResume = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const resume = await Resume.find({ userId });
+    const userId = req.userId;
+    const resumes = await Resume.find({ userId });
 
     return res
       .status(200)
-      .json({ message: "Resume fetched successfully", resume });
+      .json({ message: "Resume fetched successfully", resumes });
   } catch (error) {
     console.log("Error in getUserResume:", error);
     return res

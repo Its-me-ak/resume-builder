@@ -10,13 +10,10 @@ export const enhanceProfessionalSummary = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const response = await ai.chat.completions.create({
-      model: process.env.OPENAI_MODEL,
-      messages: [
-        {
-          role: "system",
-          content: `
-            You are an expert ATS-optimized resume writer and career coach with 15+ years of experience.
+    const result = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `
+You are an expert ATS-optimized resume writer and career coach with 15+ years of experience.
             You specialize in transforming basic professional summaries into powerful, concise, and achievement-driven summaries.
             Your writing must:
             - Be optimized for Applicant Tracking Systems (ATS)
@@ -27,26 +24,21 @@ export const enhanceProfessionalSummary = async (req, res) => {
             - Be tailored for modern corporate, startup, and freelance roles
             - Keep the summary within 3–5 impactful sentences
             Return ONLY the enhanced professional summary. Do NOT add any explanations, headings, or formatting.
-            `,
-        },
-        {
-          role: "user",
-          content: `Enhance this professional summary: ${userContent}`,
-        },
-      ],
+
+Summary:
+${userContent}
+      `,
     });
 
-    const enhancedSummary = response.choices[0].message.content.trim();
+    const text = result.text.trim();
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "Enhanced professional summary",
-      summary: enhancedSummary,
+      summary: text,
     });
   } catch (error) {
-    console.log("Error in enhanceProfessionalSummary:", error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error("enhanceProfessionalSummary:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -59,13 +51,9 @@ export const enhanceJobDescription = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const response = await ai.chat.completions.create({
-      model: process.env.OPENAI_MODEL,
-      messages: [
-        {
-          role: "system",
-          content: `
-            You are an expert ATS-optimized resume writer and career coach with 15+ years of experience.
+    const result = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `You are an expert ATS-optimized resume writer and career coach with 15+ years of experience.
             Your task is to transform raw work experience descriptions into powerful, achievement-driven, and ATS-friendly resume job descriptions.
 
             Your output must:
@@ -82,26 +70,18 @@ export const enhanceJobDescription = async (req, res) => {
             - Keep it within 2-3 impactful bullet points
 
             Return ONLY the enhanced resume-ready bullet points. Do NOT add headings, explanations, or extra text.
+            Summary: ${userContent}
             `,
-        },
-        {
-          role: "user",
-          content: `Enhance this job description: ${userContent}`,
-        },
-      ],
     });
+    const text = result.text.trim();
 
-    const enhancedJobDescription = response.choices[0].message.content.trim();
-
-    return res.status(200).json({
+    res.status(200).json({
       message: "Enhanced job description",
-      jobDescription: enhancedJobDescription,
+      jobDescription: text,
     });
   } catch (error) {
-    console.log("Error in enhanceJobDescription:", error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error("enhanceJobDescription:", error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -113,85 +93,40 @@ export const uploadResume = async (req, res) => {
     const userId = req.userId;
 
     if (!resumeText) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ message: "Missing resume text" });
     }
 
-    const systemPrompt =
-      "You are an expert AI agent to extract data from resume.";
+    const trimmedText = resumeText.slice(0, 5000);
 
-    const userPrompt = `extract data from this resume: ${resumeText}
-      Provide data in the following JSON format with no additional text before and after:
+    const result = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `
+Extract structured resume data and return ONLY valid JSON.
 
-      {
-        professional_summary: { type: String, default: "" },
-        skills: [{ type: String }],
-        personal_info: {
-          image: { type: String, default: "" },
-          full_name: { type: String, default: "" },
-          profession: { type: String, default: "" },
-          email: { type: String, default: "" },
-          phone: { type: String, default: "" },
-          location: { type: String, default: "" },
-          linkedin: { type: String, default: "" },
-          website: { type: String, default: "" },
-        },
-        experience: [
-          {
-            company: { type: String, default: "" },
-            position: { type: String, default: "" },
-            start_date: { type: String, default: "" },
-            end_date: { type: String, default: "" },
-            description: { type: String, default: "" },
-            is_current: { type: Boolean, default: false },
-          },
-        ],
-        project: [
-          {
-            name: { type: String },
-            type: { type: String },
-            description: { type: String },
-          },
-        ],
-        education: [
-          {
-            institution: { type: String },
-            degree: { type: String },
-            field: { type: String },
-            graduation_date: { type: String },
-            gpa: { type: String },
-          },
-        ],
-          }
-    `;
-
-    const response = await ai.chat.completions.create({
-      model: process.env.OPENAI_MODEL,
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: userPrompt,
-        },
-      ],
-      response_format: {
-        type: "json_object",
-      },
+Resume:
+${trimmedText}
+      `,
     });
-    const extractedData = response.choices[0].message.content.trim();
-    const parsedData = JSON.parse(extractedData);
-    const newResume = await Resume.create({ ...parsedData, userId, title });
-    return res.status(200).json({
-      resumeId: newResume._id,
+
+    let parsed;
+    try {
+      parsed = JSON.parse(result.text);
+    } catch {
+      return res.status(400).json({
+        message: "Invalid JSON returned by AI",
+        raw: result.text,
+      });
+    }
+
+    const resume = await Resume.create({ ...parsed, title, userId });
+
+    res.status(200).json({
+      resumeId: resume._id,
       message: "Resume uploaded successfully",
     });
   } catch (error) {
-    console.log("Error in uploadResume:", error);
-    logger.error(error.stack);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error("uploadResume:", error);
+    res.status(500).json({ message: error.message });
   }
 };
+
