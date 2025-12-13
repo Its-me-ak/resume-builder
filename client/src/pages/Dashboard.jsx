@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyResumeData } from "../assets/assets";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import api from "../config/api";
@@ -31,12 +30,9 @@ const Dashboard = () => {
 
   const loadAllResumes = async () => {
     try {
-       const { data } = await api.get(
-         "/api/users/resumes",
-         { withCredentials: true }
-       );
-       console.log(data);
-       setAllResumes(data?.resumes);
+      const { data } = await api.get("/api/users/resumes");
+      console.log(data);
+      setAllResumes(data?.resumes);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || error.message);
@@ -85,26 +81,56 @@ const Dashboard = () => {
   };
 
   const editTitle = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      const { data } = await api.put(
+        `/api/resumes/update`,
+        {resumeId: editResumeId, resumeData: JSON.stringify({title})},
+        { withCredentials: true }
+      )
+      setAllResumes(
+        allResumes.map((resume) =>
+          resume._id === editResumeId ? { ...resume, title }: resume
+        )
+      );
+      setTitle("");
+      setEditResumeId("");
+      setShowCreateResume(false);
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   // Delete resume
-  const deleteResume = (resumeId) => {
-    Swal.fire({
+  const deleteResume = async (resumeId) => {
+    const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const newResumes = allResumes.filter(
-          (resume) => resume._id !== resumeId
-        );
-        setAllResumes(newResumes);
-        Swal.fire("Deleted!", "Resume deleted.", "success");
-      }
     });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await api.delete(`/api/resumes/delete/${resumeId}`, {
+        withCredentials: true,
+      });
+
+      setAllResumes((prev) => prev.filter((resume) => resume._id !== resumeId));
+
+      Swal.fire("Deleted!", "Resume deleted.", "success");
+    } catch (error) {
+      console.log(error);
+      Swal.fire(
+        "Error",
+        error?.response?.data?.message || "Failed to delete resume",
+        "error"
+      );
+    }
   };
 
   useEffect(() => {
