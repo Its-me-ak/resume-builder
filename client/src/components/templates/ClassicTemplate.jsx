@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -40,13 +41,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.linkedin && (
                         <div className="flex items-center gap-1">
                             <Linkedin className="size-4" />
-                            <span className="break-all">{data.personal_info.linkedin}</span>
+                            <Link to={data.personal_info.linkedin} target="_blank">Linkedin</Link>
                         </div>
                     )}
                     {data.personal_info?.website && (
                         <div className="flex items-center gap-1">
                             <Globe className="size-4" />
-                            <span className="break-all">{data.personal_info.website}</span>
+                            <Link to={data.personal_info.website} target="_blank">Portfolio</Link>
                         </div>
                     )}
                 </div>
