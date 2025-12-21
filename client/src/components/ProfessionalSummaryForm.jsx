@@ -51,7 +51,7 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
           ) : (
             <Sparkles className="size-4" />
           )}
-          {isGenerating ? "Generating..." : "Enhance with AI"}
+          {isGenerating ? "Enhancing..." : "Enhance with AI"}
         </button>
       </div>
 

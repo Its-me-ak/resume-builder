@@ -17,7 +17,7 @@ export const enhanceProfessionalSummary = async (req, res) => {
         {
           role: "system",
           content:
-            "You are an expert resume writer. Your task is to enhance the professional summary of a resume. The summary should be concise (2–3 sentences) and clearly highlight key skills, relevant experience, and career goals. Ensure it is compelling, ATS-friendly, and return only the improved text without any additional explanations or options.",
+            "You are an expert resume writer. Your task is to enhance the professional summary of a resume. The summary should be concise (1–2 sentences) and clearly highlight key skills, relevant experience, and career goals. Ensure it is compelling, ATS-friendly, and return only the improved text without any additional explanations or options.",
         },
         {
           role: "user",
@@ -51,7 +51,7 @@ export const enhanceJobDescription = async (req, res) => {
         {
           role: "system",
           content:
-            "You are an expert resume writer. Your task is to enhance the job description section of a resume. The description should be concise (2–3 sentences) and clearly highlight key responsibilities and achievements. Use strong action verbs and include quantifiable results where possible. Ensure the content is ATS-friendly and return only the improved text without any additional explanations or options.",
+            "You are an expert resume writer. Your task is to enhance the job description section of a resume. The description should be concise (1–2 sentences) and clearly highlight key responsibilities and achievements. Use strong action verbs and include quantifiable results where possible. Ensure the content is ATS-friendly and return only the improved text without any additional explanations or options.",
         },
         {
           role: "user",
