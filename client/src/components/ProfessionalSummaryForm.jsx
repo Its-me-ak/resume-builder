@@ -1,7 +1,35 @@
-import React from "react";
-import { Info, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { Info, Loader2, Sparkles } from "lucide-react";
+import api from "../config/api";
+import toast from "react-hot-toast";
 
 const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const generateAiSummary = async () => {
+    try {
+      setIsGenerating(true);
+      const prompt = `Enhance my professional summary: ${data}`;
+      const response = await api.post(
+        "/api/ai/enhance-pro-summary",
+        {
+          userContent: prompt,
+        },
+        { withCredentials: true }
+      );
+
+      setResumeData((prevData) => ({
+        ...prevData,
+        professional_summary: response.data.enhancedSummary,
+      }));
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4 justify-between">
@@ -13,9 +41,17 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
             Briefly summarize your professional background and key skills.
           </p>
         </div>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-md text-sm bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors disabled:opacity-50 whitespace-nowrap">
-          <Sparkles className="size-4" />
-          <span>AI Enhance</span>
+        <button
+          className="flex items-center gap-2 px-3 py-2 rounded-md text-sm bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors disabled:opacity-50 whitespace-nowrap"
+          disabled={isGenerating}
+          onClick={generateAiSummary}
+        >
+          {isGenerating ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <Sparkles className="size-4" />
+          )}
+          {isGenerating ? "Generating..." : "Enhance with AI"}
         </button>
       </div>
 
