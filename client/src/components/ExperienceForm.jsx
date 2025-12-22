@@ -2,6 +2,9 @@ import { Briefcase, Loader2, Plus, Sparkles, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import api from "../config/api";
 import toast from "react-hot-toast";
+import { normalizeResumeDate } from "../utils/dateUtils";
+import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
 
 const ExperienceForm = ({ data, onChange }) => {
   const [generatingIndex, setGeneratingIndex] = useState(-1);
@@ -114,22 +117,34 @@ const ExperienceForm = ({ data, onChange }) => {
                     handleExperienceChange(index, "position", e.target.value)
                   }
                 />
-                <input
-                  type="date"
+                <DatePicker
+                  selected={normalizeResumeDate(experience.start_date)}
+                  onChange={(date) =>
+                    handleExperienceChange(
+                      index,
+                      "start_date",
+                      dayjs(date).format("MMM YYYY")
+                    )
+                  }
+                  dateFormat="MMM YYYY"
+                  showMonthYearPicker
+                  placeholderText="Start Date"
                   className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full"
-                  value={experience.start_date || ""}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "start_date", e.target.value)
-                  }
                 />
-                <input
-                  type="date"
-                  className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full disabled:bg-gray-100"
+                <DatePicker
+                  selected={normalizeResumeDate(experience.end_date)}
                   disabled={experience.is_current}
-                  value={experience.end_date || ""}
-                  onChange={(e) =>
-                    handleExperienceChange(index, "end_date", e.target.value)
+                  onChange={(date) =>
+                    handleExperienceChange(
+                      index,
+                      "end_date",
+                      dayjs(date).format("MMM YYYY")
+                    )
                   }
+                  dateFormat="MMM YYYY"
+                  showMonthYearPicker
+                  placeholderText="End Date"
+                  className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full disabled:bg-gray-100"
                 />
               </div>
               <label className="inline-flex items-center gap-2">
@@ -168,7 +183,9 @@ const ExperienceForm = ({ data, onChange }) => {
                     ) : (
                       <Sparkles className="w-3 h-3" />
                     )}
-                    {generatingIndex === index ? "Enhancing..." : "Enhance with AI"}
+                    {generatingIndex === index
+                      ? "Enhancing..."
+                      : "Enhance with AI"}
                   </button>
                 </div>
                 <textarea

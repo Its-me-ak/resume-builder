@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import Preview from "./pages/Preview";
 import { useDispatch } from "react-redux";
+import "react-datepicker/dist/react-datepicker.css";
 import api from "./config/api";
 import { login, setLoading } from "./app/features/authSlice";
 import { Toaster } from "react-hot-toast";

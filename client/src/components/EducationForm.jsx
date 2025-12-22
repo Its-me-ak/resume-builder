@@ -1,5 +1,8 @@
 import { GraduationCap, Plus, Trash2 } from "lucide-react";
 import React from "react";
+import { normalizeResumeDate } from "../utils/dateUtils";
+import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
 
 const EducationForm = ({ data, onChange }) => {
   const handleAddEducation = () => {
@@ -74,7 +77,9 @@ const EducationForm = ({ data, onChange }) => {
                   className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full"
                   placeholder=" Institution Name"
                   value={education.institution || ""}
-                  onChange={(e) => handleEducationChange(index, "institution", e.target.value)}
+                  onChange={(e) =>
+                    handleEducationChange(index, "institution", e.target.value)
+                  }
                 />
                 <input
                   type="text"
@@ -95,17 +100,19 @@ const EducationForm = ({ data, onChange }) => {
                     handleEducationChange(index, "field", e.target.value)
                   }
                 />
-                <input
-                  type="date"
-                  className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full"
-                  value={education.graduation_date || ""}
-                  onChange={(e) =>
+                <DatePicker
+                  selected={normalizeResumeDate(education.graduation_date)}
+                  onChange={(date) =>
                     handleEducationChange(
                       index,
                       "graduation_date",
-                      e.target.value
+                      dayjs(date).format("MMM YYYY")
                     )
                   }
+                  dateFormat="MMM YYYY"
+                  showMonthYearPicker
+                  placeholderText="Graduation Date"
+                  className="border border-gray-300 rounded-lg text-sm px-3 py-2 w-full"
                 />
               </div>
 
