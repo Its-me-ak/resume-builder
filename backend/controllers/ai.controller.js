@@ -51,7 +51,7 @@ export const enhanceJobDescription = async (req, res) => {
         {
           role: "system",
           content:
-            "You are an expert resume writer. Your task is to enhance the job description section of a resume. The description should be concise (1–2 sentences) and clearly highlight key responsibilities and achievements. Use strong action verbs and include quantifiable results where possible. Ensure the content is ATS-friendly and return only the improved text without any additional explanations or options.",
+            "Rewrite the job description into exactly two concise, ATS-friendly sentences, placing each complete sentence on a separate new line, using strong action verbs and measurable impact where possible, and return only the rewritten text.",
         },
         {
           role: "user",
