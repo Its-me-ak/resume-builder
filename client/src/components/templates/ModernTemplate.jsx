@@ -14,8 +14,8 @@ const ModernTemplate = ({ data, accentColor }) => {
 	return (
 		<div className="max-w-4xl mx-auto bg-white text-gray-800">
 			{/* Header */}
-			<header className="p-8 text-white" style={{ backgroundColor: accentColor }}>
-				<h1 className="text-4xl font-light mb-3">
+			<header className="px-8 py-6 text-white" style={{ backgroundColor: accentColor }}>
+				<h1 className="text-4xl font-light mb-3 leading-relaxed">
 					{data.personal_info?.full_name || "Your Name"}
 				</h1>
 
@@ -47,7 +47,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					{data.personal_info?.website && (
 						<Link target="_blank" to={data.personal_info?.website} className="flex items-center gap-2 underline">
 							{/* <Globe className="size-4" /> */}
-							<span >Portfolio</span>
+							<span>Portfolio</span>
 						</Link>
 					)}
 				</div>
@@ -57,17 +57,17 @@ const ModernTemplate = ({ data, accentColor }) => {
 				{/* Professional Summary */}
 				{data.professional_summary && (
 					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+						<h2 className="text-2xl font-light mb-4 pb-2 leading-loose border-b border-gray-200">
 							Professional Summary
 						</h2>
-						<p className="text-gray-700 ">{data.professional_summary}</p>
+						<p className="text-gray-700 leading-relaxed">{data.professional_summary}</p>
 					</section>
 				)}
 
 				{/* Experience */}
 				{data.experience && data.experience.length > 0 && (
 					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-6 pb-2 border-b border-gray-200">
+						<h2 className="text-2xl font-light mb-6 pb-2 leading-loose border-b border-gray-200">
 							Experience
 						</h2>
 
@@ -80,7 +80,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 											<h3 className="text-xl font-medium text-gray-900">{exp.position}</h3>
 											<p className="font-medium" style={{ color: accentColor }}>{exp.company}</p>
 										</div>
-										<div className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded">
+										<div className="text-sm text-gray-500 px-3 py-1 rounded">
 											{formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}
 										</div>
 									</div>
@@ -98,7 +98,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 				{/* Projects */}
 				{data.project && data.project.length > 0 && (
 					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+						<h2 className="text-2xl font-light mb-4 pb-2 leading-loose border-b border-gray-200">
 							Projects
 						</h2>
 
@@ -127,7 +127,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					{/* Education */}
 					{data.education && data.education.length > 0 && (
 						<section>
-							<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+							<h2 className="text-2xl font-light mb-4 pb-2 leading-loose border-b border-gray-200">
 								Education
 							</h2>
 
@@ -138,7 +138,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 											{edu.degree} {edu.field && `in ${edu.field}`}
 										</h3>
 										<p style={{ color: accentColor }}>{edu.institution}</p>
-										<div className="flex justify-between items-center text-sm text-gray-600">
+										<div className="flex justify-between items-center text-sm text-gray-600 bg-none">
 											<span>{formatDate(edu.graduation_date)}</span>
 											{edu.gpa && <span>GPA: {edu.gpa}</span>}
 										</div>
@@ -151,7 +151,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					{/* Skills */}
 					{data.skills && data.skills.length > 0 && (
 						<section>
-							<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+							<h2 className="text-2xl font-light mb-4 pb-2 leading-loose border-b border-gray-200">
 								Skills
 							</h2>
 
@@ -159,7 +159,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 								{data.skills.map((skill, index) => (
 									<span
 										key={index}
-										className="px-3 py-1 text-sm text-white rounded-full"
+										className="px-3 py-1 text-xs text-white rounded-md align-baseline"
 										style={{ backgroundColor: accentColor }}
 									>
 										{skill}

@@ -21,7 +21,10 @@ const ColorPicker = ({ selectedColor, onChange }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-1 text-sm text-purple-600 bg-linear-to-br from-purple-50 to-purple-100 ring-purple-300 hover:ring transition-all px-3 py-2 rounded-lg"
+        className="flex items-center gap-1 text-sm text-purple-600
+             bg-gradient-to-br from-purple-50 to-purple-100
+             ring-1 ring-purple-300 hover:ring-2 hover:ring-purple-400
+             transition-all px-3 py-2 rounded-lg"
       >
         <Palette size={16} className="max-sm:hidden" />{" "}
         <span>Accent Color</span>
@@ -32,7 +35,10 @@ const ColorPicker = ({ selectedColor, onChange }) => {
             <div
               key={color.value}
               className="relative cursor-pointer group flex flex-col"
-              onClick={() => {onChange(color.value); setIsOpen(false);}}
+              onClick={() => {
+                onChange(color.value);
+                setIsOpen(false);
+              }}
             >
               <div
                 className={`w-12 h-12 rounded-full border-2 border-transparent group-hover:border-black/25 transition-colors`}

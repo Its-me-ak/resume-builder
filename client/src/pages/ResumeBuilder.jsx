@@ -119,6 +119,7 @@ const handleDownloadResume = async () => {
     useCORS: true,
     backgroundColor: "#ffffff",
     scrollY: -window.scrollY,
+    letterRendering: true
   });
 
   const imgData = canvas.toDataURL("image/png");
@@ -188,7 +189,7 @@ const handleDownloadResume = async () => {
               {/* progress bar using activeSectionIndex */}
               <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
               <hr
-                className="absolute top-0 left-0 h-1 bg-linear-to-r from-green-500 to-green-600 border-none transition-all duration-2000"
+                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none transition-all duration-1000 ease-linear"
                 style={{
                   width: `${
                     (activeSectionIndex * 100) / (sections.length - 1)
@@ -311,7 +312,7 @@ const handleDownloadResume = async () => {
               </div>
 
               <button
-                className="bg-linear-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm"
+                className="bg-gradient-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring-1 hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm"
                 onClick={() => {
                   toast.promise(saveResume, { loading: "Saving..." });
                 }}
@@ -327,7 +328,7 @@ const handleDownloadResume = async () => {
               <div className="absolute bottom-3 left-0 right-0 flex items-center justify-end gap-2">
                 {resumeData.public && (
                   <button
-                    className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-green-100 to-blue-200 text-blue-600 ring-blue-300 rounded-lg hover:ring transition-colors"
+                    className="flex items-center gap-2 p-2 px-3 text-xs bg-gradient-to-br from-green-100 to-blue-200 text-blue-600 ring-blue-300 rounded-lg hover:ring-1 transition-colors"
                     onClick={shareResume}
                   >
                     <Share2Icon className="size-4" />
@@ -336,7 +337,7 @@ const handleDownloadResume = async () => {
                 )}
 
                 <button
-                  className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-purple-100 to-purple-200 text-purple-600 ring-purple-300 rounded-lg hover:ring transition-colors"
+                  className="flex items-center gap-2 p-2 px-3 text-xs bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600 ring-purple-300 rounded-lg hover:ring-1 transition-colors"
                   onClick={changeResumeVisibility}
                 >
                   {resumeData.public ? (
@@ -349,7 +350,7 @@ const handleDownloadResume = async () => {
 
                 <button
                   onClick={handleDownloadResume}
-                  className="flex items-center gap-2 p-2 px-3 text-xs bg-linear-to-br from-green-100 to-green-200 text-green-600 ring-green-300 rounded-lg hover:ring transition-colors"
+                  className="flex items-center gap-2 p-2 px-3 text-xs bg-gradient-to-br from-green-100 to-green-200 text-green-600 ring-green-300 rounded-lg hover:ring-1 transition-colors"
                 >
                   <Download className="size-4" />
                   Download

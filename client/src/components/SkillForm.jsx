@@ -69,7 +69,7 @@ const SkillForm = ({ data, onChange }) => {
               key={index}
               className="flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-1 text-blue-800"
             >
-              <spa>{skill}</spa>
+              <span className="text-sm">{skill}</span>
               <button
                 className="ml-1 hover:bg-blue-200 rounded-full p-1 transition-colors"
                 onClick={() => handleDeleteSkill(index)}
