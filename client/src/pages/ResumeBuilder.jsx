@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import {
   ArrowLeftIcon,
   Briefcase,
@@ -30,6 +32,7 @@ import toast from "react-hot-toast";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
+  const resumeRef = useRef(null);
   const [resumeData, setResumeData] = useState({
     id: "",
     title: "",
@@ -107,9 +110,33 @@ const ResumeBuilder = () => {
     }
   };
 
-  const handleDownloadResume = () => {
-    window.print();
-  };
+const handleDownloadResume = async () => {
+  const element = resumeRef.current;
+  if (!element) return;
+
+  const canvas = await html2canvas(element, {
+    scale: 2, // higher quality
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    scrollY: -window.scrollY,
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pdfWidth = 210; // A4 width in mm
+  const pdfHeight = 297;
+
+  const imgProps = pdf.getImageProperties(imgData);
+  const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  // Force single page
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight, undefined, "FAST");
+
+  pdf.save(`${resumeData.title || "resume"}.pdf`);
+};
+
 
   const saveResume = async () => {
     try {
@@ -283,8 +310,11 @@ const ResumeBuilder = () => {
                 )}
               </div>
 
-              <button className="bg-linear-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm"
-                onClick={() => {toast.promise(saveResume, {loading: "Saving..."})}}
+              <button
+                className="bg-linear-to-br from-green-100 to-green-200 ring-green-300 text-green-600 ring hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm"
+                onClick={() => {
+                  toast.promise(saveResume, { loading: "Saving..." });
+                }}
               >
                 Save Changes
               </button>
@@ -330,11 +360,13 @@ const ResumeBuilder = () => {
             {/* 
             Resume Preview
           */}
-            <ResumePreview
-              data={resumeData}
-              template={resumeData.template}
-              accentColor={resumeData.accent_color}
-            />
+            <div ref={resumeRef}>
+              <ResumePreview
+                data={resumeData}
+                template={resumeData.template}
+                accentColor={resumeData.accent_color}
+              />
+            </div>
           </div>
         </div>
       </div>

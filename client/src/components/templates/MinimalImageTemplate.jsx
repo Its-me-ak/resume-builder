@@ -35,7 +35,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
                         {data.personal_info?.full_name || "Your Name"}
                     </h1>
-                    <p className="uppercase text-zinc-600 font-medium text-sm tracking-widest">
+                    <p className="uppercase text-zinc-600 font-medium text-sm tracking-widest mt-2">
                         {data?.personal_info?.profession || "Profession"}
                     </p>
                 </div>
@@ -52,31 +52,31 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         <div className="space-y-2 text-sm">
                             {data.personal_info?.phone && (
                                 <div className="flex items-center gap-2">
-                                    <Phone size={14} style={{ color: accentColor }} />
+                                    {/* <Phone size={14} style={{ color: accentColor }} /> */}
                                     <span>{data.personal_info.phone}</span>
                                 </div>
                             )}
                             {data.personal_info?.email && (
                                 <div className="flex items-center gap-2">
-                                    <Mail size={14} style={{ color: accentColor }} />
+                                    {/* <Mail size={14} style={{ color: accentColor }} /> */}
                                     <span>{data.personal_info.email}</span>
                                 </div>
                             )}
                             {data.personal_info?.location && (
                                 <div className="flex items-center gap-2">
-                                    <MapPin size={14} style={{ color: accentColor }} />
+                                    {/* <MapPin size={14} style={{ color: accentColor }} /> */}
                                     <span>{data.personal_info.location}</span>
                                 </div>
                             )}
                             {data.personal_info?.linkedin && (
                                 <div className="flex items-center gap-2">
-                                    <Linkedin size={14} style={{ color: accentColor }} />
+                                    {/* <Linkedin size={14} style={{ color: accentColor }} /> */}
                                     <Link to={data.personal_info.linkedin} target="_blank">Linkedin</Link>
                                 </div>
                             )}
                             {data.personal_info?.website && (
                                 <div className="flex items-center gap-2">
-                                    <Globe size={14} style={{ color: accentColor }} />
+                                    {/* <Globe size={14} style={{ color: accentColor }} /> */}
                                     <Link to={data.personal_info.website} target="_blank">Portfolio</Link>
                                 </div>
                             )}
@@ -155,7 +155,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                             {exp.company}
                                         </p>
                                         {exp.description && (
-                                            <ul className="list-disc list-inside text-sm text-zinc-700 leading-relaxed space-y-1">
+                                            <ul className="list-disc text-sm text-zinc-700 leading-relaxed space-y-1">
                                                 {exp.description.split("\n").map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
@@ -181,7 +181,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                             {project.type}
                                         </p>
                                         {project.description && (
-                                            <ul className="list-disc list-inside text-sm text-zinc-700  space-y-1">
+                                            <ul className="list-disc text-sm text-zinc-700  space-y-1">
                                                 {project.description.split("\n").map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}

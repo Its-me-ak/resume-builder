@@ -139,7 +139,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-2xl font-medium mb-6 bg-linear-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
+        <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
           Welcome, Joe Smith
         </p>
         <div className="flex gap-4">
@@ -147,7 +147,7 @@ const Dashboard = () => {
             className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
             onClick={() => setShowCreateResume(true)}
           >
-            <PlusIcon className="size-11 transition-all duration-300 p-2.5 bg-linear-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
+            <PlusIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
             <p className="capitalize text-sm group-hover:text-indigo-600 transition-all">
               create resume
             </p>
@@ -157,7 +157,7 @@ const Dashboard = () => {
             className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
             onClick={() => setShowUploadResume(true)}
           >
-            <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-linear-to-br from-purple-300 to-purple-500 text-white rounded-full" />
+            <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-purple-300 to-purple-500 text-white rounded-full" />
             <p className="capitalize text-sm group-hover:text-purple-600 transition-all">
               upload existing
             </p>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                   style={{ color: baseColor }}
                 />
                 <p
-                  className="text-sm text-center px-2 group-hover:scale-105 transition-all max-w-36 wrap-break-word whitespace-normal"
+                  className="text-sm text-center px-2 max-w-[9rem] group-hover:scale-105 transition-all break-words whitespace-normal"
                   style={{ color: baseColor }}
                 >
                   {resume.title}

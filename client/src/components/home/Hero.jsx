@@ -43,28 +43,32 @@ const Hero = () => {
           </div>
 
           <div className="flex gap-2">
-            <Link
-              to={"/auth?state=register"}
-              className="hidden md:block px-6 py-2 bg-green-600 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
-              hidden={user}
-            >
-              Get started
-            </Link>
-            <Link
-              to={"/auth?state=login"}
-              className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900"
-              hidden={user}
-            >
-              Login
-            </Link>
+            {!user && (
+              <>
+                <Link
+                  to="/auth?state=register"
+                  className="hidden md:block px-6 py-2 bg-green-600 rounded-full text-white"
+                >
+                  Get started
+                </Link>
 
-            <Link
-              to={"/app"}
-              className="hidden md:block px-6 py-2 bg-green-600 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
-              hidden={!user}
-            >
-              Dashboard
-            </Link>
+                <Link
+                  to="/auth?state=login"
+                  className="hidden md:block px-6 py-2 border rounded-full text-slate-700"
+                >
+                  Login
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <Link
+                to="/app"
+                className="hidden md:block px-6 py-2 bg-green-600 rounded-full text-white"
+              >
+                Dashboard
+              </Link>
+            )}
           </div>
 
           <button
@@ -175,7 +179,7 @@ const Hero = () => {
           {/* Headline + CTA */}
           <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-4 md:leading-[70px]">
             Land your dream job with{" "}
-            <span className=" bg-linear-to-r from-green-700 to-green-600 bg-clip-text text-transparent text-nowrap">
+            <span className=" bg-gradient-to-r from-green-700 to-green-600 bg-clip-text text-transparent text-nowrap">
               AI-powered{" "}
             </span>{" "}
             resume.
