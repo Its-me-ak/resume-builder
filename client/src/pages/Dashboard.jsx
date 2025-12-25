@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const loadAllResumes = async () => {
     try {
-      const { data } = await api.get("/api/users/resumes");
+      const { data } = await api.get("/users/resumes");
       console.log(data);
       setAllResumes(data?.resumes);
     } catch (error) {
@@ -42,7 +42,7 @@ const Dashboard = () => {
     try {
       e.preventDefault();
       const { data } = await api.post(
-        "/api/resumes/create",
+        "/resumes/create",
         { title },
         { withCredentials: true }
       );
@@ -63,7 +63,7 @@ const Dashboard = () => {
     try {
       const resumeText = await pdfToText(resume);
       const { data } = await api.post(
-        "/api/ai/upload-resume",
+        "/ai/upload-resume",
         { title, resumeText },
         { withCredentials: true }
       );
@@ -83,7 +83,7 @@ const Dashboard = () => {
     try {
       e.preventDefault();
       const { data } = await api.put(
-        `/api/resumes/update`,
+        `/resumes/update`,
         { resumeId: editResumeId, resumeData: JSON.stringify({ title }) },
         { withCredentials: true }
       );
@@ -115,7 +115,7 @@ const Dashboard = () => {
     if (!result.isConfirmed) return;
 
     try {
-      await api.delete(`/api/resumes/delete/${resumeId}`, {
+      await api.delete(`/resumes/delete/${resumeId}`, {
         withCredentials: true,
       });
 

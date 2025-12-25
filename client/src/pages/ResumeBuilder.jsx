@@ -52,7 +52,7 @@ const ResumeBuilder = () => {
 
   const loadExistingResume = async () => {
     try {
-      const { data } = await api.get(`/api/resumes/get/${resumeId}`, {
+      const { data } = await api.get(`/resumes/get/${resumeId}`, {
         withCredentials: true,
       });
       if (data.resume) {
@@ -83,7 +83,7 @@ const ResumeBuilder = () => {
         "resumeData",
         JSON.stringify({ public: !resumeData.public })
       );
-      const { data } = await api.put(`/api/resumes/update`, formData, {
+      const { data } = await api.put(`/resumes/update`, formData, {
         withCredentials: true,
       });
       setResumeData({ ...resumeData, public: !resumeData.public });
@@ -155,7 +155,7 @@ const handleDownloadResume = async () => {
       typeof resumeData.personal_info.image === "object" &&
         formData.append("image", resumeData.personal_info.image);
 
-      const { data } = await api.put(`/api/resumes/update`, formData, {
+      const { data } = await api.put(`/resumes/update`, formData, {
         withCredentials: true,
       });
       setResumeData(data.resume);

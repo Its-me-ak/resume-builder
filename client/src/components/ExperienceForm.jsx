@@ -41,7 +41,7 @@ const ExperienceForm = ({ data, onChange }) => {
     const prompt = `enhance this job description ${experience.description} for the position of ${experience.position} at ${experience.company}`;
     try {
       const { data } = await api.post(
-        "/api/ai/enhance-job-description",
+        "/ai/enhance-job-description",
         { userContent: prompt },
         { withCredentials: true }
       );

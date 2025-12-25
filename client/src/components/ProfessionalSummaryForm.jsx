@@ -11,7 +11,7 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
       setIsGenerating(true);
       const prompt = `Enhance my professional summary: ${data}`;
       const response = await api.post(
-        "/api/ai/enhance-pro-summary",
+        "/ai/enhance-pro-summary",
         {
           userContent: prompt,
         },

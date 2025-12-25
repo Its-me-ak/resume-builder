@@ -20,7 +20,7 @@ const App = () => {
     dispatch(setLoading(true));
 
     try {
-      const { data } = await api.get("/api/users/data", {
+      const { data } = await api.get("/users/data", {
         withCredentials: true,
       });
 

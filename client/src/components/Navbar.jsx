@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const logoutUser = async () => {
     try {
-      await api.post("/api/users/logout", {}, { withCredentials: true });
+      await api.post("/users/logout", {}, { withCredentials: true });
     } catch (error) {
       console.log("Logout error:", error);
     }
