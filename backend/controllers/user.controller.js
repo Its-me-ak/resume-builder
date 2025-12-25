@@ -114,7 +114,7 @@ export const getUserById = async (req, res) => {
 // GET: /api/user/resumes
 export const getUserResume = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const resumes = await Resume.find({ userId });
 
     return res

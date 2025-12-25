@@ -6,7 +6,7 @@ import fs from "fs";
 // POST: /api/resumes/create
 export const createResume = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const { title } = req.body;
 
     const newResume = await Resume.create({
@@ -28,7 +28,7 @@ export const createResume = async (req, res) => {
 // DELETE: /api/resumes/delete/:id
 export const deleteResume = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const { resumeId } = req.params;
     const resume = await Resume.findOneAndDelete({ _id: resumeId, userId });
     if (!resume) {
@@ -47,7 +47,7 @@ export const deleteResume = async (req, res) => {
 // GET: /api/resumes/get/:resumeId
 export const getResumeById = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const { resumeId } = req.params;
     const resume = await Resume.findOne({ _id: resumeId, userId }).select(
       "-__v -createdAt -updatedAt"
@@ -69,8 +69,9 @@ export const getResumeById = async (req, res) => {
 // GET: /api/resumes/public/:resumeId
 export const getPublicResumeById = async (req, res) => {
   try {
+    const userId = req.user._id;
     const { resumeId } = req.params;
-    const resume = await Resume.findOne({ public: true, _id: resumeId }).select(
+    const resume = await Resume.findOne({ public: true, _id: resumeId, userId }).select(
       "-__v -createdAt -updatedAt"
     );
     if (!resume) {
@@ -90,7 +91,7 @@ export const getPublicResumeById = async (req, res) => {
 // PUT: /api/resumes/update
 export const updateResume = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user._id;
     const { resumeId, resumeData, removeBackground } = req.body;
     const image = req.file;
 
@@ -111,7 +112,7 @@ export const updateResume = async (req, res) => {
     }
 
     const resume = await Resume.findByIdAndUpdate(
-      { userId, _id: resumeId },
+      { _id: resumeId, userId },
       resumeDataCopy,
       { new: true }
     );
