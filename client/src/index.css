@@ -8,6 +8,10 @@
     scroll-behavior: smooth;
 }
 
+input {
+    box-shadow: none !important;
+}
+
 
 @layer base {
     button {

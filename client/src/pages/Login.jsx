@@ -50,38 +50,38 @@ const Login = () => {
         </h1>
         <p className="text-gray-500 text-sm mt-2">Please sign in to continue</p>
         {state !== "login" && (
-          <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+          <div className="flex items-center mt-6 w-full focus-within:border-indigo-500 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
             <User size={17} color="#6B7280" />
             <input
               type="text"
               name="name"
               placeholder="Name"
-              className="border-none outline-none ring-0"
+              className="border-none outline-none"
               value={formData.name}
               onChange={handleChange}
               required
             />
           </div>
         )}
-        <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+        <div className="flex items-center w-full focus-within:border-indigo-500 mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
           <Mail size={17} color="#6B7280" />
           <input
             type="email"
             name="email"
             placeholder="Email id"
-            className="border-none outline-none ring-0"
+            className="border-none outline-none"
             value={formData.email}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+        <div className="flex items-center mt-4 focus-within:border-indigo-500 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
           <Lock size={17} color="#6B7280" />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="border-none outline-none ring-0"
+            className="border-none outline-none"
             value={formData.password}
             onChange={handleChange}
             required
