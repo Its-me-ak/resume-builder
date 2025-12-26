@@ -187,27 +187,73 @@ const Hero = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed inset-0 z-50 bg-black/40 text-black backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-300 ${
+          className={`fixed inset-0 z-50 bg-black/40 backdrop-blur flex flex-col items-center justify-center text-lg gap-6 md:hidden transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <a href="#" className="text-white">
+          {/* Nav Links */}
+          <a href="#" className="text-white" onClick={() => setMenuOpen(false)}>
             Home
           </a>
-          <a href="#features" className="text-white">
+          <a
+            href="#features"
+            className="text-white"
+            onClick={() => setMenuOpen(false)}
+          >
             Features
           </a>
-          <a href="#testimonials" className="text-white">
+          <a
+            href="#testimonials"
+            className="text-white"
+            onClick={() => setMenuOpen(false)}
+          >
             Testimonials
           </a>
-          <a href="#contact" className="text-white">
+          <a
+            href="#contact"
+            className="text-white"
+            onClick={() => setMenuOpen(false)}
+          >
             Contact
           </a>
+
+          {/* Auth Buttons */}
+          {!user && (
+            <>
+              <Link
+                to="/auth?state=register"
+                onClick={() => setMenuOpen(false)}
+                className="mt-4 px-8 py-2 bg-green-600 text-white rounded-full"
+              >
+                Get Started
+              </Link>
+
+              <Link
+                to="/auth?state=login"
+                onClick={() => setMenuOpen(false)}
+                className="px-8 mt-4 py-2 border border-white text-white rounded-full"
+              >
+                Login
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <Link
+              to="/app"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 px-8 py-2 bg-green-600 text-white rounded-full"
+            >
+              Dashboard
+            </Link>
+          )}
+
+          {/* Close Button */}
           <button
             onClick={() => setMenuOpen(false)}
-            className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-green-600 hover:bg-green-700 transition text-white rounded-md flex"
+            className="mt-6 flex items-center justify-center size-10 bg-green-600 hover:bg-green-700 text-white rounded-md"
           >
-            X
+            ✕
           </button>
         </div>
 
