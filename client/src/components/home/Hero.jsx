@@ -231,7 +231,7 @@ const Hero = () => {
               <Link
                 to="/auth?state=login"
                 onClick={() => setMenuOpen(false)}
-                className="px-8 mt-4 py-2 border border-white text-white rounded-full"
+                className="px-8 mt-2 py-2 border border-white text-white rounded-full"
               >
                 Login
               </Link>
