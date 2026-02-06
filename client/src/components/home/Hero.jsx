@@ -145,7 +145,7 @@ const Hero = () => {
                   to="/auth?state=register"
                   className="hidden md:block px-6 py-2 bg-green-600 rounded-full text-white"
                 >
-                  Get started
+                  Signup
                 </Link>
 
                 <Link

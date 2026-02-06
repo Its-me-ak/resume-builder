@@ -1,15 +1,15 @@
+import dayjs from "dayjs";
 import { Mail, Phone, MapPin, Globe, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const MinimalImageTemplate = ({ data, accentColor }) => {
-    const formatDate = (dateStr) => {
-        if (!dateStr) return "";
-        const [year, month] = dateStr.split("-");
-        return new Date(year, month - 1).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-        });
-    };
+   const formatDate = (dateStr) => {
+     if (!dateStr) return "";
+
+     const parsed = dayjs(dateStr, ["MMM YYYY", "MMMM YYYY"], true);
+
+     return parsed.isValid() ? parsed.format("MMM YYYY") : "";
+   };
 
     return (
         <div className="max-w-5xl mx-auto bg-white text-zinc-800">

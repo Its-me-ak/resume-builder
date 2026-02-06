@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
+ import dayjs from "dayjs";
 
 
 const ClassicTemplate = ({ data, accentColor }) => {
-    const formatDate = (dateStr) => {
-        if (!dateStr) return "";
-        const [year, month] = dateStr.split("-");
-        return new Date(year, month - 1).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short"
-        });
-    };
+  
+
+   const formatDate = (dateStr) => {
+     if (!dateStr) return "";
+
+     const parsed = dayjs(dateStr, ["MMM YYYY", "MMMM YYYY"], true);
+
+     return parsed.isValid() ? parsed.format("MMM YYYY") : "";
+   };
+
 
     return (
       <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
