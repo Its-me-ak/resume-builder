@@ -11,7 +11,7 @@ import aiRouter from "./routes/ai.route.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 // Database connection
 await connectDatabase();
@@ -32,13 +32,13 @@ app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
 app.use("/api/ai", aiRouter);
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../client/dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
 
-//   app.get(/.*/, (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-//   });
-// }
+  app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
